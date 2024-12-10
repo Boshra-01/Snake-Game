@@ -6,7 +6,8 @@ SIZE_OF_BLOCK = 50
 
 class Apple:
     def __init__(self, parent_screen):
-        self.image = pygame.image.load("Media/apple.jpg").convert()
+        self.image = pygame.image.load("Media/trump.png").convert_alpha()
+        self.image = pygame.transform.scale(self.image, (SIZE_OF_BLOCK, SIZE_OF_BLOCK))
         self.parent_screen = parent_screen
         self.x = SIZE_OF_BLOCK*3
         self.y = SIZE_OF_BLOCK*3
@@ -18,7 +19,6 @@ class Apple:
     def run_apple(self):
         self.x = random.randint(0,20)*SIZE_OF_BLOCK #screensize: 1000by500 & apple size=50,so,(1000/50=20),(500/50=10)
         self.y = random.randint(0,10)*SIZE_OF_BLOCK #horizontally 20, vertically 10
-
 
 class build_Snake:
     def __init__(self,parent_screen ,length_snake):
@@ -44,7 +44,6 @@ class build_Snake:
     def right(self):
         self.direction = 'right'
 
-
     def draw(self):
         self.parent_screen.fill((255, 204, 255))
 
@@ -57,7 +56,6 @@ class build_Snake:
         for i in range (self.length_snake-1,0,-1):
             self.x[i] = self.x[i-1] #current x position will be previous x block's position
             self.y[i] = self.y[i-1]
-
         if self.direction == 'up':
             self.y[0] -= SIZE_OF_BLOCK
         if self.direction == 'down':
@@ -68,7 +66,6 @@ class build_Snake:
             self.x[0] += SIZE_OF_BLOCK
 
         self.draw()
-
 
 class run_Snake:
     def __init__(self):
@@ -91,7 +88,7 @@ class run_Snake:
         self.scoreboard()
         pygame.display.flip()
 
-        if self.eat(self.snake.x[0], self.snake.y[0], self.apple.x, self.apple.y):
+        if self.eat(self.snake.x[0], self.snake.y[0], self.apple.x, self.apple.y): #US will eat
             self.snake.big_fat_snake()
             self.apple.run_apple()
 
@@ -99,7 +96,6 @@ class run_Snake:
         font =pygame.font.SysFont("times new roman",20)
         score = font.render(f"You smashed it {self.snake.length_snake} times!", True, (205,30, 152)) #storing the score with render function for colors
         self.surface.blit(score,(800,10)) #blit function is always required for 'surface'
-c
 
     def run(self):
         running = True
@@ -117,7 +113,6 @@ c
                         self.snake.left()
                     if event.key == K_RIGHT:
                         self.snake.right()
-
 
                 elif event.type == QUIT:
                     running = False
